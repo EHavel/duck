@@ -1,68 +1,145 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. Vamos criar um site em react
 
-## Available Scripts
+```bash
+npx create-react-app duck
+```
 
-In the project directory, you can run:
+1. Instalar dependencias
 
-### `yarn start`
+```
+yarn add redux react-redux
+```
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Deletar todos os arquivos desnecessários
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+1. Criar pasta uma pasta de `components`
 
-### `yarn test`
+1. Criar arquivo `add.js`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+import React from "react";
 
-### `yarn build`
+const Add = () => {};
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+export default Add;
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```
+<button>Adicionar +1</button>
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+const clickAdd = () => {
+  console.log("Adiciona um 🦆");
+};
 
-### `yarn eject`
+onClick = { clickAdd }
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. Adicionar o componente no `index.js`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+import Add from "./components/add";
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<Add />
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. Criar na pasta `components` o arquivo `counter.js`
 
-## Learn More
+```
+import React from "react";
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+const Counter = () => {
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  return <h1>🦆 = 0</h1>;
+};
 
-### Code Splitting
+export default Counter;
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+9. Adicionar o componente no `index.js`
 
-### Analyzing the Bundle Size
+```
+import Counter from "./components/counter";
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+<Counter />
+```
 
-### Making a Progressive Web App
+1. Criar pasta `ducks` e um arquivo `count.js`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+1. Estrutura basica do `ducks`
 
-### Advanced Configuration
+```
+export const types = {};
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+export const actions = {};
 
-### Deployment
+export const reducer = () => {};
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+```
+ADD_1: "ADD_1",
 
-### `yarn build` fails to minify
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+add1: () => ({
+    type: types.ADD_1,
+}),
+
+state = 0, action
+
+let newState = state;
+return newState;
+```
+
+```
+switch (action.type) {
+    case types.ADD_1:
+    break;
+    default:
+}
+
+newState++;
+```
+
+```
+newState++;
+```
+
+1. Configurar o duck
+
+```
+import { Provider } from "react-redux";
+import { createStore, combineReducers } from "redux";
+import { reducer as count } from "./ducks/count";
+
+const store = createStore(
+  combineReducers({
+    count,
+  })
+);
+
+<Provider store={store}></Provider>
+```
+
+1. Usar um state global, no arquivos `counter.js`
+
+```
+import { useSelector } from "react-redux";
+
+const count = useSelector();
+
+(state) => state.count
+
+{count}
+```
+
+1. Configurar um disparo de eventos
+
+```
+import { useDispatch } from "react-redux";
+import { actions as countActions } from "../ducks/count";
+
+const dispacth = useDispatch();
+
+dispacth(countActions.add1());
+```
